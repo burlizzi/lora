@@ -5,7 +5,7 @@
 #include "esphome/core/preferences.h"
 #include "esphome/core/automation.h"
 
-#include <lorawan.h>
+//#include <lorawan.h>
 
 #include <RadioLib.h>
 
