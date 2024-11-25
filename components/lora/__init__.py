@@ -62,9 +62,9 @@ CONFIG_SCHEMA = cv.Schema(
 
 
 async def to_code(config):
-    # cg.add_library("https://github.com/burlizzi/Beelan-LoRaWAN", "")
-    # cg.add_library("git:../../../Beelan-LoRaWAN", "")
+    cg.add_library("SPI", "")
     cg.add_library("RadioLib", "")
+    cg.add_platformio_option("lib_ldf_mode", "chain+")
     cg.add_build_flag("-D" + config[CONF_BAND])
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
