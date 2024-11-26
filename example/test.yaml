@@ -1,0 +1,89 @@
+esp32:
+  framework:
+    #type: arduino 
+    type: esp-idf 
+    version: recommended
+  board: esp32doit-devkit-v1
+
+esphome:
+  name: loranew
+
+
+logger:
+
+wifi:
+  ssid: "xxx"
+  password: "xxx"
+
+api:
+
+ota:
+  platform: esphome
+
+web_server:
+
+spi:
+  clk_pin: 18
+  miso_pin: 19
+  mosi_pin: 23
+
+
+external_components:
+  - source: github://burlizzi/lora/
+  #- source:  radiolora/components
+    components: [ lora ]
+
+
+http_request:
+  useragent: esphome/device
+  verify_ssl: false
+  timeout: 10s
+
+
+lora:
+  id: radio
+  band: EU868
+  rst_pin: 4
+  cs_pin: 5
+  dio0_pin: 33
+  dio1_pin: 32
+  dio2_pin: 35
+  deveui: 0000
+  appkey: 6700E176003FC24CE520072931909006
+  data_action:
+    - http_request.get:
+        url: !lambda |-
+          if (port==99) 
+                return "";
+          std::string s;
+          auto hex="0123456789ABCDEF";
+          for(auto i:data)
+          {
+              s+=hex[i/16];
+              s+=hex[i&0xf];
+          }
+          return ((std::string) "https://api.telegram.org/bot5145135669:AAHszCkUv2lD5c7lfuQeVyTlOQNv8Mts2uk/sendMessage?chat_id=576050386&text=" + s);
+
+    - lambda: |-
+        ESP_LOGD("test1","rssi:%d %d:%s",rssi,port,data.c_str());
+
+
+switch:
+
+
+  - platform: template
+    name: "begin"
+    turn_on_action:
+        lambda: |-
+          ESP_LOGD("begin","ret:");
+          //ret=node.setOutputPower(20);
+          //ESP_LOGD("setOutputPower","ret:%d",ret);
+          //node.beginOTAA(joinEUI, devEUI, NULL, appKey);
+
+
+          
+
+  - platform: restart
+    name: "LoraWan Restart"
+
+
