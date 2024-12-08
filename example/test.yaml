@@ -49,7 +49,7 @@ lora:
   dio1_pin: 32
   dio2_pin: 35
   deveui: 0000
-  appkey: 6700E176003FC24CE520072931909006
+  appkey: xxx
   data_action:
     - http_request.get:
         url: !lambda |-
@@ -62,7 +62,7 @@ lora:
               s+=hex[i/16];
               s+=hex[i&0xf];
           }
-          return ((std::string) "https://api.telegram.org/bot5145135669:AAHszCkUv2lD5c7lfuQeVyTlOQNv8Mts2uk/sendMessage?chat_id=576050386&text=" + s);
+          return ((std::string) "https://api.telegram.org/bot5145135669:xxxx/sendMessage?chat_id=xxxx&text=" + s);
 
     - lambda: |-
         ESP_LOGD("test1","rssi:%d %d:%s",rssi,port,data.c_str());
