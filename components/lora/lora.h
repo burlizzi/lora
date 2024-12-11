@@ -112,6 +112,8 @@ namespace esphome{
               if (joined)
               {
                 sendUplink((char*)message.c_str(), message.length(), confirm, port);
+                ESP_LOGI("lora","sending on channel %d count:%d",LoRa_Settings.Channel_Tx,Session_Data.Frame_Counter);
+                update();
                 ESP_LOGI("lora","sent on channel %d count:%d",LoRa_Settings.Channel_Tx,Session_Data.Frame_Counter);
                 rtc.save(&Session_Data);
               }
